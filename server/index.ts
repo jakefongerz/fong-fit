@@ -1,10 +1,17 @@
 import express from 'express';
 import { config } from 'dotenv';
+import http from 'http';
+
 
 // load environment variables
 config();
 
 const app = express();
+
+// slightly modified version of the code we wrote in class.
+// we wrap the express app in a node http server so that we can
+// expose the server to socket.io later on.
+const server = http.createServer(app);
 const port = parseInt(process.env.PORT || '3000');
 
 
@@ -48,6 +55,6 @@ app.get('/', (req, res) => {
     `);
 });
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
